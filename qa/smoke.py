@@ -1,4 +1,4 @@
-import subprocess,time,xml.etree.ElementTree as ET,re,json
+import subprocess,time,xml.etree.ElementTree as ET,re,json,os
 import uiautomator2 as u2
 from pathlib import Path
 out=Path('qa-results');out.mkdir(exist_ok=True)
@@ -29,7 +29,7 @@ def wait_text(text,name,seconds=45):
             print('Verified UI: '+name,flush=True);return tree
         time.sleep(3)
     raise AssertionError('UI text not found: '+text)
-print(adb('install','-r','bump-island-2.0.0.apk'),flush=True)
+print(adb('install','-r',os.environ.get('ISLAND_APK','bump-island-2.0.0.apk')),flush=True)
 adb('shell','svc','wifi','disable');adb('shell','svc','data','disable')
 print(adb('shell','am','start','-W','-n','com.bumpisland.game/.MainActivity'),flush=True)
 tree=wait_text('开始冒险','01-home')
@@ -37,10 +37,13 @@ assert click_text('开始冒险',tree)
 tree=wait_text('出发，第一碰','02-guide');assert click_text('出发，第一碰',tree)
 tree=wait_text('激活技能','03-battle')
 assert click_text('激活技能',tree)
-tree=wait_text('已激活','04-skill',seconds=15)
+errors=[]
+try:tree=wait_text('已激活','04-skill',seconds=15)
+except AssertionError as e:errors.append(str(e))
 # Drag the first blue hero upward in arena coordinates, then inspect next-turn evidence.
 device.swipe(200,913,207,1100,duration=.55)
-tree=wait_text('回合冷却','05-after-shot',seconds=15)
+try:tree=wait_text('回合冷却','05-after-shot',seconds=15)
+except AssertionError as e:errors.append(str(e))
 adb('shell','input','keyevent','4');tree=wait_text('继续冒险','06-back-pauses')
 assert click_text('继续冒险',tree)
 adb('shell','input','keyevent','3');time.sleep(2);adb('shell','am','start','-W','-n','com.bumpisland.game/.MainActivity');tree=wait_text('继续冒险','07-background-pauses')
@@ -48,5 +51,6 @@ assert click_text('返回岛屿',tree)
 wait_text('开始冒险','08-home-again')
 adb('shell','am','force-stop','com.bumpisland.game');adb('shell','am','start','-W','-n','com.bumpisland.game/.MainActivity');wait_text('开始冒险','09-cold-restart')
 logs=adb('logcat','-d');assert 'FATAL EXCEPTION' not in '\n'.join(l for l in logs.splitlines() if 'com.bumpisland' in l or 'FATAL EXCEPTION' in l)
-(out/'result.json').write_text(json.dumps({'ok':True,'android':adb('shell','getprop','ro.build.version.release').strip(),'offline':True,'installation':True,'home':True,'battle':True,'skill':True,'backButton':True,'coldRestart':True},indent=2))
+(out/'result.json').write_text(json.dumps({'ok':not errors,'errors':errors,'android':adb('shell','getprop','ro.build.version.release').strip(),'offline':True,'installation':True,'home':True,'battle':True,'skill':not errors,'backButton':True,'coldRestart':True},indent=2))
+assert not errors,errors
 print('Android installation and offline smoke passed',flush=True)
