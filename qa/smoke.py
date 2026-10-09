@@ -25,6 +25,11 @@ def wait_text(text,name,seconds=45):
             assert click_text('Got it',tree);time.sleep(2);continue
         if any("Pixel Launcher isn't responding" in n.attrib.get('text','') for n in nodes):
             assert click_text('Close app',tree);time.sleep(2);continue
+        # Android's activity entrance scales the accessibility coordinates.
+        # Wait for the full-size WebView before using bounds to inject input.
+        webviews=[n for n in nodes if n.attrib.get('text')=='碰碰岛 · BUMP ISLAND']
+        if webviews and webviews[0].attrib.get('bounds')!='[0,0][720,1560]':
+            time.sleep(1);continue
         if any(text in (n.attrib.get('text','')+' '+n.attrib.get('content-desc','')) for n in tree.iter('node')):
             print('Verified UI: '+name,flush=True);return tree
         time.sleep(3)
@@ -41,7 +46,8 @@ errors=[]
 try:tree=wait_text('已激活','04-skill',seconds=15)
 except AssertionError as e:errors.append(str(e))
 # Drag the first blue hero upward in arena coordinates, then inspect next-turn evidence.
-device.swipe(200,913,207,1100,duration=.55)
+device.swipe(186,845,190,1050,duration=.35)
+time.sleep(2)
 try:tree=wait_text('回合冷却','05-after-shot',seconds=15)
 except AssertionError as e:errors.append(str(e))
 adb('shell','input','keyevent','4');tree=wait_text('继续冒险','06-back-pauses')
