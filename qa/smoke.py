@@ -17,6 +17,13 @@ def wait_text(text,name,seconds=45):
     start=time.time()
     while time.time()-start<seconds:
         tree=dump(name)
+        # Fresh emulators show Android's first fullscreen explanation. Only
+        # dismiss known system overlays; never hide a game crash/ANR.
+        nodes=list(tree.iter('node'))
+        if any(n.attrib.get('resource-id')=='android:id/immersive_cling_title' for n in nodes):
+            assert click_text('Got it',tree);time.sleep(2);continue
+        if any("Pixel Launcher isn't responding" in n.attrib.get('text','') for n in nodes):
+            assert click_text('Close app',tree);time.sleep(2);continue
         if any(text in (n.attrib.get('text','')+' '+n.attrib.get('content-desc','')) for n in tree.iter('node')):return tree
         time.sleep(3)
     raise AssertionError('UI text not found: '+text)
