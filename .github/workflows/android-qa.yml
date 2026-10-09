@@ -1,0 +1,41 @@
+name: Android installation and offline smoke
+on: [push, workflow_dispatch]
+permissions:
+  contents: read
+jobs:
+  android:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Prepare Android emulator
+        shell: bash
+        run: |
+          sudo chmod 666 /dev/kvm
+          yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --licenses >/dev/null || true
+          "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" 'platform-tools' 'emulator' 'system-images;android-35;google_apis;x86_64'
+          echo no | "$ANDROID_HOME/cmdline-tools/latest/bin/avdmanager" create avd -n island-qa -k 'system-images;android-35;google_apis;x86_64' --force
+          mkdir -p qa-results
+          "$ANDROID_HOME/emulator/emulator" @island-qa -no-window -no-audio -no-boot-anim -no-snapshot -gpu swiftshader_indirect -memory 2048 -cores 2 >qa-results/emulator.log 2>&1 &
+          adb wait-for-device
+          for i in $(seq 1 120); do
+            if [ "$(adb shell getprop sys.boot_completed | tr -d '\r')" = 1 ]; then break; fi
+            sleep 2
+          done
+          test "$(adb shell getprop sys.boot_completed | tr -d '\r')" = 1
+          adb shell wm size 1080x2340
+          adb shell wm density 440
+          adb shell input keyevent 82
+      - name: Install and exercise offline APK
+        run: python3 qa/smoke.py
+      - name: Collect evidence
+        if: always()
+        run: |
+          adb logcat -d >qa-results/logcat.txt || true
+          adb exec-out screencap -p >qa-results/final-screen.png || true
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: android-installation-evidence
+          path: qa-results/
+          retention-days: 14
