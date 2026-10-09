@@ -34,8 +34,6 @@ jobs:
           adb shell wm density 294
           adb shell input keyevent 82
       - name: Install and exercise offline APK
-        env:
-          ISLAND_APK: qa/island-diagnostic.apk
         run: |
           python3 -m pip install 'uiautomator2==3.7.0'
           python3 qa/smoke.py
