@@ -12,7 +12,7 @@ def dump(name):
 def click_text(text,tree):
     for n in tree.iter('node'):
         if text in (n.attrib.get('text','')+' '+n.attrib.get('content-desc','')):
-            box=list(map(int,re.findall(r'\d+',n.attrib['bounds'])));adb('shell','input','tap',(box[0]+box[2])//2,(box[1]+box[3])//2);return True
+            box=list(map(int,re.findall(r'\d+',n.attrib['bounds'])));device.click((box[0]+box[2])//2,(box[1]+box[3])//2);return True
     return False
 def wait_text(text,name,seconds=45):
     start=time.time()
@@ -37,9 +37,9 @@ assert click_text('开始冒险',tree)
 tree=wait_text('出发，第一碰','02-guide');assert click_text('出发，第一碰',tree)
 tree=wait_text('激活技能','03-battle')
 assert click_text('激活技能',tree)
-time.sleep(1);tree=dump('04-skill');assert any('已激活' in n.attrib.get('text','') for n in tree.iter('node'))
+tree=wait_text('已激活','04-skill',seconds=15)
 # Drag the first blue hero upward in arena coordinates, then inspect next-turn evidence.
-adb('shell','input','swipe','300','1370','310','1650','550')
+device.swipe(200,913,207,1100,duration=.55)
 tree=wait_text('回合冷却','05-after-shot',seconds=15)
 adb('shell','input','keyevent','4');tree=wait_text('继续冒险','06-back-pauses')
 assert click_text('继续冒险',tree)

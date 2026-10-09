@@ -23,19 +23,19 @@ jobs:
           test -f "$ANDROID_AVD_HOME/island-qa.avd/config.ini"
           printf 'avd.ini.encoding=UTF-8\npath=%s\ntarget=android-35\n' "$ANDROID_AVD_HOME/island-qa.avd" > "$ANDROID_AVD_HOME/island-qa.ini"
           mkdir -p qa-results
-          "$ANDROID_HOME/emulator/emulator" @island-qa -no-window -no-audio -no-boot-anim -no-snapshot -gpu swiftshader_indirect -feature -Vulkan -memory 2048 -cores 2 >qa-results/emulator.log 2>&1 &
+          "$ANDROID_HOME/emulator/emulator" @island-qa -no-window -no-audio -no-boot-anim -no-snapshot -gpu swiftshader_indirect -feature -Vulkan -memory 3072 -cores 4 >qa-results/emulator.log 2>&1 &
           timeout 120 adb wait-for-device || { cat qa-results/emulator.log; exit 1; }
           for i in $(seq 1 120); do
             if [ "$(adb shell getprop sys.boot_completed | tr -d '\r')" = 1 ]; then break; fi
             sleep 2
           done
           test "$(adb shell getprop sys.boot_completed | tr -d '\r')" = 1
-          adb shell wm size 1080x2340
-          adb shell wm density 440
+          adb shell wm size 720x1560
+          adb shell wm density 294
           adb shell input keyevent 82
       - name: Install and exercise offline APK
         run: |
-          python3 -m pip install 'uiautomator2>=3,<4'
+          python3 -m pip install 'uiautomator2==3.7.0'
           python3 qa/smoke.py
       - name: Collect evidence
         if: always()
