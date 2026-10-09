@@ -1,11 +1,12 @@
 import subprocess,time,xml.etree.ElementTree as ET,re,json
+import uiautomator2 as u2
 from pathlib import Path
 out=Path('qa-results');out.mkdir(exist_ok=True)
+device=u2.connect()
 def adb(*args,raw=False):
-    return subprocess.check_output(['adb',*map(str,args)],text=not raw)
+    return subprocess.check_output(['adb',*map(str,args)],text=not raw,timeout=30)
 def dump(name):
-    adb('shell','uiautomator','dump','/sdcard/window.xml')
-    xml=adb('shell','cat','/sdcard/window.xml');(out/(name+'.xml')).write_text(xml,encoding='utf-8')
+    xml=device.dump_hierarchy();(out/(name+'.xml')).write_text(xml,encoding='utf-8')
     (out/(name+'.png')).write_bytes(adb('exec-out','screencap','-p',raw=True))
     return ET.fromstring(xml)
 def click_text(text,tree):
@@ -24,7 +25,8 @@ def wait_text(text,name,seconds=45):
             assert click_text('Got it',tree);time.sleep(2);continue
         if any("Pixel Launcher isn't responding" in n.attrib.get('text','') for n in nodes):
             assert click_text('Close app',tree);time.sleep(2);continue
-        if any(text in (n.attrib.get('text','')+' '+n.attrib.get('content-desc','')) for n in tree.iter('node')):return tree
+        if any(text in (n.attrib.get('text','')+' '+n.attrib.get('content-desc','')) for n in tree.iter('node')):
+            print('Verified UI: '+name,flush=True);return tree
         time.sleep(3)
     raise AssertionError('UI text not found: '+text)
 print(adb('install','-r','bump-island-2.0.0.apk'),flush=True)
@@ -32,14 +34,15 @@ adb('shell','svc','wifi','disable');adb('shell','svc','data','disable')
 print(adb('shell','am','start','-W','-n','com.bumpisland.game/.MainActivity'),flush=True)
 tree=wait_text('开始冒险','01-home')
 assert click_text('开始冒险',tree)
-time.sleep(3);tree=dump('02-guide');click_text('出发',tree)
+tree=wait_text('出发，第一碰','02-guide');assert click_text('出发，第一碰',tree)
 tree=wait_text('激活技能','03-battle')
 assert click_text('激活技能',tree)
 time.sleep(1);tree=dump('04-skill');assert any('已激活' in n.attrib.get('text','') for n in tree.iter('node'))
 # Drag the first blue hero upward in arena coordinates, then inspect next-turn evidence.
-adb('shell','input','swipe','300','1370','310','1650','550');time.sleep(10)
-tree=dump('05-after-shot')
+adb('shell','input','swipe','300','1370','310','1650','550')
+tree=wait_text('回合冷却','05-after-shot',seconds=15)
 adb('shell','input','keyevent','4');tree=wait_text('继续冒险','06-back-pauses')
+assert click_text('继续冒险',tree)
 adb('shell','input','keyevent','3');time.sleep(2);adb('shell','am','start','-W','-n','com.bumpisland.game/.MainActivity');tree=wait_text('继续冒险','07-background-pauses')
 assert click_text('返回岛屿',tree)
 wait_text('开始冒险','08-home-again')
