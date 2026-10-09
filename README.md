@@ -1,16 +1,18 @@
-# 碰碰岛 · 安卓手游
+# 碰碰岛 3.0
 
-碰碰岛 2.0.0 安卓版。
+3.0 重做选人、三维角色和动作表现。
 
-- 竖屏 4 对 4 弹射，六位伙伴、十二关岛屿挑战。
-- 电脑对战与同屏双人，资源全部内置，可离线游玩。
-- 本机存档，无账号、无广告、无充值。
-- Android 8.0 及以上；设备需支持 OpenGL ES 3.0，并有正常工作的 Android System WebView。
+- 六位可转动的立体伙伴，头像与场上模型一致。
+- 全屏选人、属性与技能展示、四个出战位置、明确替换和交换。
+- 呼吸、眨眼、转身、蓄力、冲刺、受击、淘汰和胜利动作。
+- 重做材质、场地包边、标线与配色；保留六位角色、十二关挑战和同屏轮流双人。
+- 同签名覆盖 2.0，保留当前设备存档，安装后离线玩。
 
-[下载与安装说明](https://axldsg99999-ship-it.github.io/bump-island-android/) · [先玩一局](https://axldsg99999-ship-it.github.io/bump-island-android/play/)
+[下载页](https://axldsg99999-ship-it.github.io/bump-island-android/?v=3.0.0-release2) · [直接试玩](https://axldsg99999-ship-it.github.io/bump-island-android/play/?v=3.0.0-release2)
 
-下载下方 `bump-island-2.0.0.apk` 安装。如果内置浏览器限制下载，请在系统浏览器打开下载页。
+验证：20 项自动测试；六种尺寸；触控与离线浏览器；[Android 15 模拟器覆盖升级与离线操作](https://github.com/axldsg99999-ship-it/bump-island-android/actions/runs/38005983398)。未作实体机性能覆盖。
 
-17 项规则与进度测试通过，浏览器整局实战、触控及离线测试通过。最终 APK 在 Android 15 模拟器完成安装、断网启动、进入战斗、技能、系统返回键、后台恢复和冷启动测试。[设备测试记录](https://github.com/axldsg99999-ship-it/bump-island-android/actions/runs/37959869916)。尚未覆盖全部实体机型与网络。
+APK: 443,364 bytes
+SHA-256: `0f1c4bdee11aa17a60ce5c75a27ffa8aac6e65fea05dcae6bdd88de6bf3b486f`
 
-SHA-256: `f319703d4510b3e4b4a3526f24c53e549c2e15d91718be89eec80ca45cc6be22`
+完整源码在 Release 的 bump-island-source-3.0.0.zip 附件中。
