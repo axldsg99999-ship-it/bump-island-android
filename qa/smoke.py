@@ -21,6 +21,8 @@ def wait_text(text,name,seconds=45):
         # Fresh emulators show Android's first fullscreen explanation. Only
         # dismiss known system overlays; never hide a game crash/ANR.
         nodes=list(tree.iter('node'))
+        if any('正在靠岸' in n.attrib.get('text','') for n in nodes):
+            time.sleep(2);continue
         if any(n.attrib.get('resource-id')=='android:id/immersive_cling_title' for n in nodes):
             assert click_text('Got it',tree);time.sleep(2);continue
         if any("Pixel Launcher isn't responding" in n.attrib.get('text','') for n in nodes):
