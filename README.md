@@ -1,16 +1,15 @@
-# 碰碰岛 5.0 · 山海绘卷
+# 碰碰岛 5.1 · 山海绘卷
 
-按用户提供的墨线、朱红、灰绿与米色纸感方向，重做山海绘卷版。
+六位神怪伙伴，四对四弹射，十二关试炼与离线游玩。
 
-- 六位神怪伙伴，每位独立站定、蓄力、出击、收势四幅关键姿势。
-- 重做大厅、立绘选人、图录编队与二维纸面战场。
-- 去掉常态漂浮和胶质拉伸，按脚底对齐动作，保证出招完整入画。
-- 保留十二关、两种场地、三档电脑难度、同屏双人与旧版存档。
+5.1 改善启动、编队可读性与角色动作：预处理 WebP 图集、分角色动作节奏、稳定转向、受击收势、加载进度与弱网重试。
 
-[下载页](https://axldsg99999-ship-it.github.io/bump-island-android/?v=5.0.0) · [直接试玩](https://axldsg99999-ship-it.github.io/bump-island-android/play/?v=5.0.0)
+[安卓下载](https://axldsg99999-ship-it.github.io/bump-island-android/?v=5.1.0) · [试玩](https://axldsg99999-ship-it.github.io/bump-island-android/play/?v=5.1.0)
 
-验证：20 项测试，六种屏幕尺寸，触屏技能与断网浏览器；[Android 15 从 4.0 覆盖升级及离线操作通过](https://github.com/axldsg99999-ship-it/bump-island-android/actions/runs/38010960442)。实体手机性能尚未验证。
+同一 4 Mbps / 60 ms / 空缓存桌面 Chromium 基准，启动由 38.4 秒缩短至 9.4 秒；1 Mbps 下 36.7 秒完成。图片由 18.3 MB 减至 4.35 MB。
 
-APK 18,540,092 字节，SHA-256：`3f884b6271c50c749b9d1c1f07cf91b9d011193575a4efa5bd033a8aaff0d500`。
+23 项测试、六种尺寸、触屏操作、浏览器离线、[Android 15 覆盖升级及离线操作](https://github.com/axldsg99999-ship-it/bump-island-android/actions/runs/38153099593)通过。没有测量实体手机帧率和发热。
 
-完整工程包含美术素材、内置 image_gen 的生成提示词和字体许可。
+安装包 4,580,931 字节，SHA-256 `6bcb5c8ceabdbea766b67c5bb0700734ef635374dbb11f1a6481cd52c207b355`。
+
+完整工程与原始美术在 Release 附件。旧版请直接覆盖安装，保留原存档。
