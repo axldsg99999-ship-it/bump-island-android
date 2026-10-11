@@ -7,6 +7,7 @@ def adb(*args,raw=False):
     return subprocess.check_output(['adb',*map(str,args)],text=not raw,timeout=30)
 def dump(name):
     xml=device.dump_hierarchy();(out/(name+'.xml')).write_text(xml,encoding='utf-8')
+    time.sleep(.2) # Let the WebView paint after the accessibility update.
     (out/(name+'.png')).write_bytes(adb('exec-out','screencap','-p',raw=True))
     return ET.fromstring(xml)
 def click_text(text,tree):
@@ -36,13 +37,13 @@ def wait_text(text,name,seconds=45):
             print('Verified UI: '+name,flush=True);return tree
         time.sleep(3)
     raise AssertionError('UI text not found: '+text)
-print(adb('install','-r','bump-island-4.0.0.apk'),flush=True)
+print(adb('install','-r','bump-island-5.0.0.apk'),flush=True)
 adb('shell','am','start','-W','-n','com.bumpisland.game/.MainActivity')
 tree=wait_text('开始冒险','00-old-home');assert click_text('开始冒险',tree)
 tree=wait_text('出发，第一碰','00-old-guide');assert click_text('出发，第一碰',tree)
 wait_text('激活技能','00-old-battle')
 adb('shell','am','force-stop','com.bumpisland.game')
-print(adb('install','-r',os.environ.get('ISLAND_APK','bump-island-5.0.0.apk')),flush=True)
+print(adb('install','-r',os.environ.get('ISLAND_APK','bump-island-5.1.0.apk')),flush=True)
 adb('shell','svc','wifi','disable');adb('shell','svc','data','disable')
 print(adb('shell','am','start','-W','-n','com.bumpisland.game/.MainActivity'),flush=True)
 tree=wait_text('开始冒险','01-home')
