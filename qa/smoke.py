@@ -13,7 +13,11 @@ def dump(name):
 def click_text(text,tree):
     for n in tree.iter('node'):
         if text in (n.attrib.get('text','')+' '+n.attrib.get('content-desc','')):
-            box=list(map(int,re.findall(r'\d+',n.attrib['bounds'])));device.click((box[0]+box[2])//2,(box[1]+box[3])//2);return True
+            box=list(map(int,re.findall(r'\d+',n.attrib['bounds'])));x=(box[0]+box[2])//2;y=(box[1]+box[3])//2
+            print(f'Tap {text}: {x},{y}',flush=True)
+            # Give WebView a real contact interval. Zero-duration emulator
+            # injection can lose the first tap after a cold launch.
+            device.touch.down(x,y);time.sleep(.12);device.touch.up(x,y);return True
     return False
 def wait_text(text,name,seconds=45):
     start=time.time()
