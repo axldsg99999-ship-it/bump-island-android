@@ -99,11 +99,22 @@ tree=wait_text('墨跳','21-bestiary-offline')
 assert click_text('关闭',tree)
 tree=wait_text('开始闯关','22-after-bestiary')
 assert click_text('背景音乐',tree)
-tree=wait_text('音乐 关','23-music-disabled')
+tree=wait_text('背景音乐','23-music-disabled')
 adb('shell','am','force-stop','com.bumpisland.game');adb('shell','am','start','-W','-n','com.bumpisland.game/.MainActivity')
-tree=wait_text('音乐 关','24-music-persisted')
+tree=wait_text('背景音乐','24-music-persisted')
+time.sleep(17)
+disabled_log=adb('logcat','-d','-s','IslandAudio:I')
+disabled_pid=adb('shell','pidof','com.bumpisland.game').strip()
+disabled_states=[]
+for line in disabled_log.splitlines():
+    if 'IslandAudio:' not in line or not re.search(r'\s'+disabled_pid+r'\s',line):continue
+    state=json.loads(line.split('IslandAudio:',1)[1].strip())
+    if isinstance(state,str):state=json.loads(state)
+    if isinstance(state,dict):disabled_states.append(state)
+assert disabled_states and disabled_states[-1]['enabled'] is False and disabled_states[-1]['playing'] is False,disabled_states
+(out/'music-disabled.json').write_text(json.dumps(disabled_states[-1],indent=2))
 assert click_text('背景音乐',tree)
-tree=wait_text('音乐 开','25-music-enabled')
+tree=wait_text('背景音乐','25-music-enabled')
 assert click_text('设置',tree)
 tree=wait_text('背景音乐','26-audio-settings')
 assert click_text('关闭',tree)
@@ -115,8 +126,9 @@ time.sleep(17)
 audio_log=adb('logcat','-d','-s','IslandAudio:I')
 (out/'audio.txt').write_text(audio_log,encoding='utf-8')
 audio_states=[]
+current_pid=adb('shell','pidof','com.bumpisland.game').strip()
 for line in audio_log.splitlines():
-    if 'IslandAudio:' not in line:continue
+    if 'IslandAudio:' not in line or not re.search(r'\s'+current_pid+r'\s',line):continue
     try:
         state=json.loads(line.split('IslandAudio:',1)[1].strip())
         if isinstance(state,str):state=json.loads(state)
