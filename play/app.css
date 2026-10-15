@@ -28,3 +28,22 @@ dialog{position:absolute;top:auto;bottom:0;left:0;right:0;width:min(100%,480px);
 .crew-header small{font-size:10px}.crew-skill p{font-size:12px;line-height:1.55}.crew-team-heading>span{font-size:10px}.hero-stats span{font-size:11px}
 #sheet[data-kind=heroes] #sheet-content{min-height:742px;grid-template-rows:64px minmax(270px,1fr) 90px 122px 122px 64px}
 @media(max-height:750px){#sheet[data-kind=heroes] #sheet-content{min-height:716px;grid-template-rows:60px minmax(254px,1fr) 86px 122px 130px 64px}}
+
+/* Mineral pigments and quiet type: illustration carries the ornament. */
+:root{--paper:#f1ead9;--ink:#243e35;--muted:#5e7067;--red:#b8442e;--rule:#344c3425}
+.score b,.clock strong,.hero-stats b,.result-stats b{font-family:var(--text);font-weight:400;letter-spacing:-.7px;font-variant-numeric:tabular-nums}
+.score b{font-size:23px}.clock strong{font-size:28px}.score small,.stage-caption,.turn-banner>span:last-child{font-family:var(--text);font-size:10px}
+.battle-top{top:max(10px,env(safe-area-inset-top))}.score{gap:29px}.stage-caption{top:61px}.turn-banner{top:81px}.turn-banner b{font-family:var(--text);font-size:12px}
+#game[data-screen=battle] #scene-wrap{inset:105px 0 176px}
+#battle-bottom{padding:8px 22px max(10px,env(safe-area-inset-bottom))}.battle-instruction{font-size:10px;margin-bottom:2px}
+#battle-squad .hero-card{height:49px}#battle-squad .avatar{width:42px;height:47px}.skill-row{padding-top:8px;min-height:77px}.skill-row b{font-size:19px}.skill-row p{font-size:10px;line-height:1.55}#skill{min-height:64px;font-family:var(--text);font-size:12px}#skill-symbol svg{width:25px;height:25px}
+.unit-label{width:25px}.unit-label .health{height:2px;background:#e5e2cd;outline:1px solid #243e3529}.floater{font-family:var(--text);font-size:20px;text-shadow:0 1px #f1ead9}
+.home-top{background:var(--paper)}.profile b{font-size:18px}.title-lockup h1{font-size:66px}.title-lockup p{color:#213e33}.download-chip{font-family:var(--text);font-size:10px}.bottom-nav button{font-family:var(--text);font-size:12px}.start-button{background:#b8442e}.start-button small{letter-spacing:.6px}
+.crew-header>span,.studio-caption>span,.studio-caption button{font-family:var(--text)}.crew-header>span{font-size:10px}.crew-header h2{font-size:23px}
+#sheet[data-kind=heroes] #sheet-content{min-height:746px;grid-template-rows:64px minmax(310px,1fr) 82px 116px 110px 64px}
+.hero-showcase{background:#9fb4a6}.hero-showcase:before{display:none}.hero-identity{left:23px;right:23px;top:18px;display:grid;grid-template-columns:1fr auto;grid-template-rows:17px 46px}.hero-identity>span{grid-column:1/3;font-family:var(--text);font-size:10px;letter-spacing:1px;color:#3c5a49}.hero-identity h3{grid-column:1;writing-mode:horizontal-tb;font-size:40px;line-height:1.1;letter-spacing:3px;margin:6px 0 0;color:#f6eedb}.hero-identity p{position:static;grid-column:2;writing-mode:horizontal-tb;align-self:center;font-family:var(--text);font-size:10px;letter-spacing:1px;color:#284e3c;margin-top:9px}
+.studio-caption{bottom:7px}.studio-caption>span{font-size:10px}.studio-caption button{font-size:12px;gap:5px}
+.crew-roster{padding-top:5px}.crew-roster .avatar{height:47px;opacity:.86}.crew-roster b{font-family:var(--text);font-size:12px;line-height:1.6}.hero-stats b{font-size:20px}.crew-details{padding-top:12px}.hero-stats{padding-bottom:10px}.crew-skill b{font-size:20px}.crew-skill>span{font-family:var(--text);font-size:10px}.crew-skill p{font-size:11px;line-height:1.6}
+.crew-team{padding-top:9px}.crew-team-heading b{font-size:16px}.crew-slots b{font-family:var(--text);font-size:13px}.crew-slots{gap:12px}.crew-slots button{min-height:38px}#assign-hero{min-height:29px;font-family:var(--text);font-size:12px}#assign-hero:disabled{font-size:10px}#save-team{font-size:20px}
+@media(max-height:750px){#sheet[data-kind=heroes] #sheet-content{min-height:724px;grid-template-rows:60px minmax(300px,1fr) 78px 112px 110px 64px}.hero-identity{top:15px}.hero-identity h3{font-size:38px}.hero-identity p{font-size:10px}.crew-roster .avatar{height:44px}}
+@media(max-height:520px) and (orientation:landscape){#game[data-screen=battle] #scene-wrap{inset:102px 270px 0 0}.battle-top{right:285px}.stage-caption{top:67px}.turn-banner{top:84px}#battle-bottom{height:100%;padding-top:55px}.skill-row{min-height:90px}}
