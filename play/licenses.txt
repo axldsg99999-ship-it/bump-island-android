@@ -293,3 +293,9 @@ INCLUDING ANY GENERAL, SPECIAL, INDIRECT, INCIDENTAL, OR CONSEQUENTIAL
 DAMAGES, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 FROM, OUT OF THE USE OR INABILITY TO USE THE FONT SOFTWARE OR FROM
 OTHER DEALINGS IN THE FONT SOFTWARE.
+
+
+Music credits (v7)
+Asianoriental2 by Tozan | https://opengameart.org/content/asianoriental2 | CC0 1.0 https://creativecommons.org/publicdomain/zero/1.0/ | Normalized and re-encoded, looped in game.
+Asianoriental1 by Tozan | https://opengameart.org/content/asianoriental1 | CC0 1.0 https://creativecommons.org/publicdomain/zero/1.0/ | Normalized and re-encoded, looped in game.
+Asian Drums by Kevin MacLeod | https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1100396 | CC BY 3.0 https://creativecommons.org/licenses/by/3.0/ | Normalized and re-encoded, looped in game.
