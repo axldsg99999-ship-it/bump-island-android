@@ -41,13 +41,13 @@ def wait_text(text,name,seconds=45):
             print('Verified UI: '+name,flush=True);return tree
         time.sleep(3)
     raise AssertionError('UI text not found: '+text)
-print(adb('install','-r','bump-island-7.0.0.apk'),flush=True)
+print(adb('install','-r','bump-island-7.1.0.apk'),flush=True)
 adb('shell','am','start','-W','-n','com.bumpisland.game/.MainActivity')
 tree=wait_text('开始闯关','00-old-home');assert click_text('开始闯关',tree)
 tree=wait_text('出发，第一碰','00-old-guide');assert click_text('出发，第一碰',tree)
 wait_text('激活技能','00-old-battle')
 adb('shell','am','force-stop','com.bumpisland.game')
-print(adb('install','-r',os.environ.get('ISLAND_APK','bump-island-7.1.0.apk')),flush=True)
+print(adb('install','-r',os.environ.get('ISLAND_APK','bump-island-8.0.0.apk')),flush=True)
 adb('shell','svc','wifi','disable');adb('shell','svc','data','disable')
 print(adb('shell','am','start','-W','-n','com.bumpisland.game/.MainActivity'),flush=True)
 tree=wait_text('开始闯关','01-home')
@@ -58,7 +58,7 @@ for key,name,skill in [('fox','阿焰','烈焰冲刺'),('turtle','岩岩','磐�
     tree=wait_text(name,'30-character-'+key)
 assert click_text('查看小蓝',tree)
 tree=wait_text('冰霜冲击','11-penguin')
-# Authored eight-key-pose ink animation preview.
+# Authored sixteen-frame ink animation preview.
 assert click_text('演示动作',tree)
 time.sleep(1);tree=dump('12-motion')
 assert click_text('替换 阿焰',tree)
@@ -83,7 +83,7 @@ errors=[]
 try:tree=wait_text('已激活','04-skill',seconds=25)
 except AssertionError as e:errors.append(str(e))
 # Drag the first blue hero upward in arena coordinates, then inspect next-turn evidence.
-device.swipe(201,801,260,1001,duration=.45)
+device.swipe(164,933,180,1135,duration=.45)
 time.sleep(2)
 try:tree=wait_text('回合冷却','05-after-shot',seconds=25)
 except AssertionError as e:errors.append(str(e))
@@ -136,6 +136,6 @@ for line in audio_log.splitlines():
     except (ValueError,TypeError):pass
 assert any(s.get('playing') and s.get('time',0)>0 and s.get('peak',0)>0 for s in audio_states),audio_log
 logs=adb('logcat','-d');assert 'FATAL EXCEPTION' not in '\n'.join(l for l in logs.splitlines() if 'com.bumpisland' in l or 'FATAL EXCEPTION' in l)
-(out/'result.json').write_text(json.dumps({'ok':not errors,'errors':errors,'android':adb('shell','getprop','ro.build.version.release').strip(),'offline':True,'installation':True,'home':True,'battle':True,'skill':not errors,'backButton':True,'coldRestart':True,'crewReplacement':True,'crewPersistence':True,'inkCharacterPreview':True,'motionDemo':True,'bestiaryOffline':True,'musicTogglePersistence':True,'physicalAudioListening':False,'audioDecoderSignal':True,'upgradedFrom':'7.0.0','version':'7.1.0'},indent=2))
+(out/'result.json').write_text(json.dumps({'ok':not errors,'errors':errors,'android':adb('shell','getprop','ro.build.version.release').strip(),'offline':True,'installation':True,'home':True,'battle':True,'skill':not errors,'backButton':True,'coldRestart':True,'crewReplacement':True,'crewPersistence':True,'inkCharacterPreview':True,'motionDemo':True,'bestiaryOffline':True,'musicTogglePersistence':True,'physicalAudioListening':False,'audioDecoderSignal':True,'upgradedFrom':'7.1.0','version':'8.0.0'},indent=2))
 assert not errors,errors
 print('Android installation and offline smoke passed',flush=True)
