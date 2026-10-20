@@ -7,7 +7,7 @@ def adb(*args,raw=False):
     return subprocess.check_output(['adb',*map(str,args)],text=not raw,timeout=30)
 def dump(name):
     xml=device.dump_hierarchy();(out/(name+'.xml')).write_text(xml,encoding='utf-8')
-    time.sleep(.2) # Let the WebView paint after the accessibility update.
+    time.sleep(.8) # Let the WebView paint after the accessibility update.
     (out/(name+'.png')).write_bytes(adb('exec-out','screencap','-p',raw=True))
     return ET.fromstring(xml)
 def click_text(text,tree):
@@ -41,21 +41,21 @@ def wait_text(text,name,seconds=45):
             print('Verified UI: '+name,flush=True);return tree
         time.sleep(3)
     raise AssertionError('UI text not found: '+text)
-print(adb('install','-r','bump-island-8.4.0.apk'),flush=True)
+print(adb('install','-r','bump-island-8.5.0.apk'),flush=True)
 adb('shell','am','start','-W','-n','com.bumpisland.game/.MainActivity')
 tree=wait_text('开始闯关','00-old-home');assert click_text('开始闯关',tree)
 tree=wait_text('出发，第一碰','00-old-guide');assert click_text('出发，第一碰',tree)
 wait_text('施展','00-old-battle')
 adb('shell','am','force-stop','com.bumpisland.game')
-print(adb('install','-r',os.environ.get('ISLAND_APK','bump-island-8.5.0.apk')),flush=True)
+print(adb('install','-r',os.environ.get('ISLAND_APK','bump-island-8.5.1.apk')),flush=True)
 adb('shell','svc','wifi','disable');adb('shell','svc','data','disable')
 print(adb('shell','am','start','-W','-n','com.bumpisland.game/.MainActivity'),flush=True)
 tree=wait_text('开始闯关','01-home')
 assert click_text('调整阵容',tree)
 tree=wait_text('烈焰冲刺','10-crew')
-for key,name,skill in [('fox','阿焰','烈焰冲刺'),('turtle','岩岩','磐石护盾'),('rabbit','露娜','治愈之跃'),('robot','波波','过载脉冲'),('penguin','小蓝','冰霜冲击'),('bear','布鲁','大地震颤')]:
+for key,name,skill in [('fox','阿焰','烈焰冲刺'),('turtle','岩岩','磐石护甲'),('rabbit','露娜','月光治愈'),('robot','波波','惊雷震荡'),('penguin','小蓝','冰霜冲击'),('bear','布鲁','巨力一击')]:
     assert click_text('查看'+name,tree)
-    tree=wait_text(name,'30-character-'+key)
+    tree=wait_text(skill,'30-character-'+key)
 assert click_text('查看小蓝',tree)
 tree=wait_text('冰霜冲击','11-penguin')
 # Authored sixteen-frame ink animation preview.
@@ -136,6 +136,6 @@ for line in audio_log.splitlines():
     except (ValueError,TypeError):pass
 assert any(s.get('playing') and s.get('time',0)>0 and s.get('peak',0)>0 for s in audio_states),audio_log
 logs=adb('logcat','-d');assert 'FATAL EXCEPTION' not in '\n'.join(l for l in logs.splitlines() if 'com.bumpisland' in l or 'FATAL EXCEPTION' in l)
-(out/'result.json').write_text(json.dumps({'ok':not errors,'errors':errors,'android':adb('shell','getprop','ro.build.version.release').strip(),'offline':True,'installation':True,'home':True,'battle':True,'skill':not errors,'backButton':True,'coldRestart':True,'crewReplacement':True,'crewPersistence':True,'inkCharacterPreview':True,'motionDemo':True,'bestiaryOffline':True,'musicTogglePersistence':True,'physicalAudioListening':False,'audioDecoderSignal':True,'upgradedFrom':'8.4.0','version':'8.5.0'},indent=2))
+(out/'result.json').write_text(json.dumps({'ok':not errors,'errors':errors,'android':adb('shell','getprop','ro.build.version.release').strip(),'offline':True,'installation':True,'home':True,'battle':True,'skill':not errors,'backButton':True,'coldRestart':True,'crewReplacement':True,'crewPersistence':True,'inkCharacterPreview':True,'motionDemo':True,'bestiaryOffline':True,'musicTogglePersistence':True,'physicalAudioListening':False,'audioDecoderSignal':True,'upgradedFrom':'8.5.0','version':'8.5.1'},indent=2))
 assert not errors,errors
 print('Android installation and offline smoke passed',flush=True)
