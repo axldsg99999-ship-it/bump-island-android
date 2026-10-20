@@ -1,4 +1,4 @@
-Bump Island 8.4.0 / 山海绘卷
+Bump Island 8.5.0 / 山海绘卷
 
 Original character atlases and backdrop: generated with built-in image_gen using the user-provided image as a visual-style reference. Original prompts: art/ink-prompts.json. No reference UI, watermark, account or logo reproduced.
 
@@ -299,3 +299,4 @@ Music credits (v7)
 Asianoriental2 by Tozan | https://opengameart.org/content/asianoriental2 | CC0 1.0 https://creativecommons.org/publicdomain/zero/1.0/ | Normalized and re-encoded, looped in game.
 Asianoriental1 by Tozan | https://opengameart.org/content/asianoriental1 | CC0 1.0 https://creativecommons.org/publicdomain/zero/1.0/ | Normalized and re-encoded, looped in game.
 Asian Drums by Kevin MacLeod | https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1100396 | CC BY 3.0 https://creativecommons.org/licenses/by/3.0/ | Normalized and re-encoded, looped in game.
+8.5 crew-courtyard.webp: original generated background, OpenAI built-in image generation. Prompt and provenance: art/source/v85/README.md.
