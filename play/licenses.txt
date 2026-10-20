@@ -1,4 +1,4 @@
-Bump Island 5.0.0 / 山海绘卷
+Bump Island 8.4.0 / 山海绘卷
 
 Original character atlases and backdrop: generated with built-in image_gen using the user-provided image as a visual-style reference. Original prompts: art/ink-prompts.json. No reference UI, watermark, account or logo reproduced.
 

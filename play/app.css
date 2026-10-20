@@ -401,3 +401,115 @@ dialog::backdrop{background:#24282096}
  .crew-roster .avatar{height:43px}.crew-details{padding-top:9px}.crew-skill{margin-top:9px}.crew-team{padding-top:9px}.crew-footer{padding-block:6px}
  .hero-identity{left:22px}.hero-identity p{display:none}.crew-header{background:none}
 }
+
+/* Display type is reserved for names and headings; instructions stay in Text. */
+@font-face{font-family:IslandDisplay;src:url(assets/ink/ink-serif.woff2);font-weight:400 900;font-display:swap}
+:root{--brush:IslandScript,KaiTi,serif;--script:IslandDisplay,'Noto Serif SC',SimSun,serif}
+button,input{font-variant-numeric:tabular-nums}
+.sheet-title{font-weight:600;font-size:28px;letter-spacing:1px}
+.sheet-description{font-size:12px;line-height:1.85}
+.sheet-action,.sheet-action.dark{font-size:21px;font-weight:600}
+.sheet-action.secondary{font:400 14px/1.6 var(--text)}
+.stage-card small{font-size:21px;font-weight:600}
+.monster-entry h4{font-size:23px;font-weight:600;letter-spacing:0}
+.monster-entry p{line-height:1.8}
+.bestiary-group h3{font:500 12px var(--text);letter-spacing:1px}
+.tutorial-steps section{font-size:19px;font-weight:600}
+.option-row{font-size:13px}
+.toggle,.toggle.on,.segment button{font:500 13px var(--text)}
+#home .title-lockup h1{font-family:var(--brush)}
+#home .title-lockup p{font-size:12px;letter-spacing:2px}
+#home .profile b{font-size:18px;font-weight:600}
+#home .destination b{font-size:22px;font-weight:600;letter-spacing:0}
+#home .start-button>span:first-child{font-size:27px;font-weight:600;letter-spacing:1px}
+#home .start-button small{font:400 10px/1.5 var(--text);letter-spacing:1px;margin-top:7px}
+#home .bottom-nav button,#home .squad-heading button,#home #music-toggle{font:500 12px var(--text)}
+#home #home-squad b{font:500 13px/1.3 var(--text);letter-spacing:1px}
+#battle .stage-caption{font-weight:600;font-size:21px}
+#battle .turn-banner b{font:500 13px/1.6 var(--text);letter-spacing:0}
+#battle .enemy-intent b{font:500 12px var(--text)}
+#battle #battle-squad .hero-card>b{font:500 11px/1.4 var(--text);letter-spacing:1px}
+#battle #skill-name{font-weight:600;font-size:16px}
+#battle #skill{font:500 12px/1.5 var(--text)}
+#battle .battle-instruction{font:400 10px/1.5 var(--text)}
+/* Character selection: a full illustration, six choices, one team strip. */
+#sheet[data-kind=heroes]{--crew-paper:#eee5d2;background:var(--crew-paper);color:#2c342c;overflow:auto}
+#sheet[data-kind=heroes] #sheet-content{height:100%;min-height:640px;display:grid;grid-template-columns:minmax(0,1fr) 67px;grid-template-rows:58px minmax(270px,1fr) 119px 104px 69px;grid-template-areas:'head head' 'stage roster' 'details details' 'team team' 'footer footer'}
+#sheet[data-kind=heroes] #close-sheet{top:7px;right:10px;width:44px;height:44px}
+#sheet[data-kind=heroes] .crew-header{padding:0 68px 0 23px;gap:20px;align-items:center;background:none;border:0}
+#sheet[data-kind=heroes] .crew-header h2{margin:0;font:600 17px/1.3 var(--script);letter-spacing:2px}
+#sheet[data-kind=heroes] .crew-header>span{display:block;margin-left:auto;font:400 11px var(--text);letter-spacing:1px;color:#777360}
+#sheet[data-kind=heroes] .hero-showcase{background:none;overflow:hidden}
+#sheet[data-kind=heroes] .hero-showcase:before{display:none}
+#sheet[data-kind=heroes] .hero-identity{display:block;left:23px;top:14px;right:auto;z-index:2;pointer-events:none}
+#sheet[data-kind=heroes] .hero-identity>span{font:500 10px var(--text);color:var(--hero-accent);letter-spacing:2px;display:inline-block;padding-bottom:7px;border-bottom:1px solid currentColor}
+#sheet[data-kind=heroes] .hero-identity h3{writing-mode:vertical-rl;white-space:nowrap;height:2.4em;width:1.1em;font:600 45px/1.1 var(--script);letter-spacing:5px;margin:14px 0 0;color:#29332a}
+#sheet[data-kind=heroes] .hero-identity p{position:absolute;left:54px;top:43px;writing-mode:vertical-rl;white-space:nowrap;font:400 11px/1.5 var(--script);letter-spacing:3px;margin:0;color:#777360}
+#sheet[data-kind=heroes] #hero-studio{width:100%;height:100%;display:block}
+#sheet[data-kind=heroes] .studio-caption{left:17px;right:auto;bottom:0;height:44px;gap:14px}
+#sheet[data-kind=heroes] .studio-caption button{font:500 11px var(--text);color:#555d4b;min-height:44px;padding:0 6px;gap:5px;letter-spacing:1px}
+#sheet[data-kind=heroes] .studio-caption button svg{width:13px;height:13px;stroke-width:1.5}
+#sheet[data-kind=heroes] #motion-phase{position:absolute;width:1px;height:1px;clip-path:inset(50%);overflow:hidden;white-space:nowrap}
+#sheet[data-kind=heroes] .crew-roster{padding:5px 11px 8px 0;gap:0;display:grid;grid-template-columns:1fr;grid-template-rows:repeat(6,minmax(44px,1fr));align-content:center;max-height:438px;align-self:center;width:100%;height:100%;background:none}
+#sheet[data-kind=heroes] .crew-roster button{height:100%;min-height:44px;max-height:73px;padding:3px 0;justify-content:center;gap:2px;border:0;opacity:.64;transition:opacity .15s}
+#sheet[data-kind=heroes] .crew-roster button.selected{opacity:1}
+#sheet[data-kind=heroes] .crew-roster button.selected:after{left:0;right:auto;top:18%;bottom:18%;width:2px;height:auto;background:var(--hero-accent)}
+#sheet[data-kind=heroes] .crew-roster .avatar{width:43px;height:45px;max-height:calc(100% - 16px);opacity:1}
+#sheet[data-kind=heroes] .crew-roster b{font:500 10px/1.2 var(--text);color:#525b49;letter-spacing:1px}
+#sheet[data-kind=heroes] .crew-roster .selected b{color:#29332a}
+#sheet[data-kind=heroes] .crew-roster i{position:absolute;left:5px;right:auto;top:5px;width:auto;height:auto;border-radius:0;background:none;color:#847761;font:400 9px var(--text);font-style:normal;display:none}
+#sheet[data-kind=heroes] .crew-roster .in-team i{display:block}
+#sheet[data-kind=heroes] .crew-details{padding:0 23px;background:none}
+#sheet[data-kind=heroes] .hero-stats{height:39px;display:grid;grid-template-columns:repeat(3,1fr);gap:0;align-items:center;padding:0;border:0;border-top:1px solid #73674e28}
+#sheet[data-kind=heroes] .hero-stats>div{display:flex;gap:8px;align-items:baseline}
+#sheet[data-kind=heroes] .hero-stats>div:last-child{justify-content:flex-end}
+#sheet[data-kind=heroes] .hero-stats>div:nth-child(2){justify-content:center}
+#sheet[data-kind=heroes] .hero-stats span{font:400 10px var(--text);color:#80765f}
+#sheet[data-kind=heroes] .hero-stats b{font:500 17px/1.2 var(--text);color:#343c30;font-variant-numeric:tabular-nums}
+#sheet[data-kind=heroes] .crew-skill{display:flex;gap:11px;margin:7px 0 0;align-items:flex-start}
+#sheet[data-kind=heroes] #crew-skill-symbol{flex:0 0 25px;color:var(--hero-accent);padding-top:2px}
+#sheet[data-kind=heroes] #crew-skill-symbol svg{width:24px;height:24px;stroke-width:1.3}
+#sheet[data-kind=heroes] .crew-skill b{display:block;font:600 18px/1.35 var(--script);letter-spacing:1px}
+#sheet[data-kind=heroes] .crew-skill p{font:400 11px/1.7 var(--text);color:#686956;margin:5px 0 0;max-width:none}
+#sheet[data-kind=heroes] .crew-team{padding:9px 23px 0;background:none}
+#sheet[data-kind=heroes] .crew-team-heading{align-items:center;gap:10px;height:19px}
+#sheet[data-kind=heroes] .crew-team-heading b{font:500 11px var(--text);letter-spacing:1px}
+#sheet[data-kind=heroes] .crew-team-heading>span{font:400 10px var(--text);color:#837963}
+#sheet[data-kind=heroes] .crew-slots{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:7px}
+#sheet[data-kind=heroes] .crew-slots button{position:relative;display:flex;flex-direction:row;align-items:center;justify-content:center;gap:3px;min-height:56px;padding:0 0 5px;border:0;border-bottom:1px solid #73674e25;color:#4e5745}
+#sheet[data-kind=heroes] .crew-slots button.active{border-color:var(--hero-accent);color:#8c442c}
+#sheet[data-kind=heroes] .crew-slots .avatar{width:32px;height:43px}
+#sheet[data-kind=heroes] .crew-slots em{position:absolute;top:0;left:0;font:400 8px var(--text);font-style:normal;color:#8d816c}
+#sheet[data-kind=heroes] .crew-slots b{font:500 11px/1.4 var(--text);writing-mode:vertical-rl;letter-spacing:1px}
+#sheet[data-kind=heroes] .crew-footer{padding:7px 23px max(12px,env(safe-area-inset-bottom));position:static;background:none;border:0;gap:12px;align-items:center}
+#sheet[data-kind=heroes] .crew-footer>span{font:400 10px/1.5 var(--text);color:#837963}
+#sheet[data-kind=heroes] #save-team{height:44px;min-height:44px;min-width:156px;padding:0 18px;background:#31382f;color:#f5ecd7;justify-content:space-between;gap:18px;font:600 15px var(--script);letter-spacing:1px;border:0}
+#sheet[data-kind=heroes] #save-team svg{width:20px;height:20px;stroke-width:1.2}
+@media(max-width:374px){
+ #sheet[data-kind=heroes] #sheet-content{grid-template-columns:minmax(0,1fr) 60px}
+ #sheet[data-kind=heroes] .crew-roster{padding-right:8px}
+ #sheet[data-kind=heroes] .hero-identity{left:20px}.hero-identity h3{font-size:41px}
+ #sheet[data-kind=heroes] .crew-details,#sheet[data-kind=heroes] .crew-team,#sheet[data-kind=heroes] .crew-footer{padding-inline:20px}
+ #sheet[data-kind=heroes] .crew-slots{gap:9px}
+}
+@media(max-height:700px) and (orientation:portrait){
+ #sheet[data-kind=heroes] #sheet-content{grid-template-rows:50px minmax(270px,1fr) 116px 100px 64px;min-height:600px}
+ #sheet[data-kind=heroes] .hero-identity h3{writing-mode:horizontal-tb;width:auto;height:auto;font-size:32px;letter-spacing:3px;margin-top:8px}
+ #sheet[data-kind=heroes] .hero-identity p{writing-mode:horizontal-tb;left:84px;top:34px;letter-spacing:1px}
+ #sheet[data-kind=heroes] .crew-roster .avatar{width:36px;height:37px}
+ #sheet[data-kind=heroes] .crew-roster b{font-size:9px}
+ #sheet[data-kind=heroes] .crew-team{padding-top:5px}
+}
+@media(max-height:520px) and (orientation:landscape){
+ #sheet[data-kind=heroes]{width:min(100%,900px);max-width:900px}
+ #sheet[data-kind=heroes] #sheet-content{min-height:360px;grid-template-columns:minmax(280px,1fr) 60px minmax(310px,1fr);grid-template-rows:52px minmax(125px,1fr) 112px 71px;grid-template-areas:'head head head' 'stage roster details' 'stage roster team' 'stage roster footer'}
+ #sheet[data-kind=heroes] .crew-header{justify-content:flex-start}.crew-header>span{margin-left:15px}
+ #sheet[data-kind=heroes] .hero-identity h3{writing-mode:horizontal-tb;width:auto;height:auto;font-size:35px;margin-top:8px}
+ #sheet[data-kind=heroes] .hero-identity p{display:block;writing-mode:horizontal-tb;left:90px;top:36px;letter-spacing:1px}
+ #sheet[data-kind=heroes] .crew-details{padding-top:4px}
+ #sheet[data-kind=heroes] .crew-roster{padding-right:8px;max-height:330px}
+ #sheet[data-kind=heroes] .crew-roster .avatar{height:35px;width:35px}
+ #sheet[data-kind=heroes] .crew-roster button{gap:0}
+ #sheet[data-kind=heroes] .crew-skill{margin-top:12px}
+ #sheet[data-kind=heroes] .crew-footer{padding-bottom:16px}
+}
