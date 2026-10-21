@@ -10,10 +10,15 @@ def dump(name):
     time.sleep(.8) # Let the WebView paint after the accessibility update.
     (out/(name+'.png')).write_bytes(adb('exec-out','screencap','-p',raw=True))
     return ET.fromstring(xml)
-def click_text(text,tree):
+def click_text(text,tree,scrolls=0):
     for n in tree.iter('node'):
         if text in (n.attrib.get('text','')+' '+n.attrib.get('content-desc','')):
             box=list(map(int,re.findall(r'\d+',n.attrib['bounds'])));x=(box[0]+box[2])//2;y=(box[1]+box[3])//2
+            width,height=device.window_size()
+            if not (0<x<width and 0<y<height):
+                assert scrolls<6,'Cannot scroll to '+text
+                device.swipe(width*.5,height*.78,width*.5,height*.35,duration=.35);time.sleep(.4)
+                return click_text(text,ET.fromstring(device.dump_hierarchy()),scrolls+1)
             print(f'Tap {text}: {x},{y}',flush=True)
             # Give WebView a real contact interval. Zero-duration emulator
             # injection can lose the first tap after a cold launch.
@@ -136,6 +141,16 @@ for line in audio_log.splitlines():
     except (ValueError,TypeError):pass
 assert any(s.get('playing') and s.get('time',0)>0 and s.get('peak',0)>0 for s in audio_states),audio_log
 logs=adb('logcat','-d');assert 'FATAL EXCEPTION' not in '\n'.join(l for l in logs.splitlines() if 'com.bumpisland' in l or 'FATAL EXCEPTION' in l)
-(out/'result.json').write_text(json.dumps({'ok':not errors,'errors':errors,'android':adb('shell','getprop','ro.build.version.release').strip(),'offline':True,'installation':True,'home':True,'battle':True,'skill':not errors,'backButton':True,'coldRestart':True,'crewReplacement':True,'crewPersistence':True,'inkCharacterPreview':True,'motionDemo':True,'bestiaryOffline':True,'musicTogglePersistence':True,'physicalAudioListening':False,'audioDecoderSignal':True,'upgradedFrom':'8.7.0','version':'8.7.1'},indent=2))
+# Clear only the disposable emulator app data to exercise the current first run.
+adb('shell','pm','clear','com.bumpisland.game')
+adb('shell','am','start','-W','-n','com.bumpisland.game/.MainActivity')
+tree=wait_text('开始闯关','40-fresh-home');assert click_text('开始闯关',tree)
+tree=wait_text('出发，第一碰','41-fresh-guide')
+buttons=[n for n in tree.iter('node') if '出发，第一碰' in (n.attrib.get('text','')+' '+n.attrib.get('content-desc',''))]
+assert buttons
+box=list(map(int,re.findall(r'\d+',buttons[0].attrib['bounds'])));assert 0<=box[1]<box[3]<=1560,box
+assert click_text('出发，第一碰',tree)
+wait_text('施展','42-fresh-battle')
+(out/'result.json').write_text(json.dumps({'ok':not errors,'errors':errors,'android':adb('shell','getprop','ro.build.version.release').strip(),'offline':True,'installation':True,'home':True,'battle':True,'skill':not errors,'backButton':True,'coldRestart':True,'crewReplacement':True,'crewPersistence':True,'inkCharacterPreview':True,'motionDemo':True,'bestiaryOffline':True,'musicTogglePersistence':True,'physicalAudioListening':False,'audioDecoderSignal':True,'firstRunGuideVisible':True,'upgradedFrom':'8.7.0','version':'8.7.1'},indent=2))
 assert not errors,errors
 print('Android installation and offline smoke passed',flush=True)
