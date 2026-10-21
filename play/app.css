@@ -169,8 +169,8 @@ dialog{position:absolute;top:auto;bottom:0;left:0;right:0;width:min(100%,480px);
 #game[data-screen=battle][data-boss=true] #scene-wrap{inset:0}
 #battle{isolation:isolate;--ivory:#30392e;--gold:#675a3b;color:var(--ivory);text-shadow:0 1px 2px #f7edcfb0}
 #battle:before,#battle:after{content:'';position:absolute;left:0;right:0;pointer-events:none;z-index:-1}
-#battle:before{top:0;height:150px;background:linear-gradient(180deg,#f1e7cef2,#f1e7ceba 52%,transparent)}
-#battle:after{bottom:0;height:146px;background:linear-gradient(0deg,#f1e7cef2,#f1e7cea6 60%,transparent)}
+#battle:before{top:0;height:132px;background:linear-gradient(180deg,#f1e7cef2,#f1e7ceba 48%,transparent)}
+#battle:after{bottom:0;height:132px;background:linear-gradient(0deg,#f1e7cef2,#f1e7ceba 57%,transparent)}
 #battle .battle-top{inset:max(12px,env(safe-area-inset-top)) 14px auto 20px;height:48px;display:block}
 #battle #pause{position:absolute;right:0;top:0;width:44px;height:44px;border:0;border-radius:0;background:none;color:var(--ivory)}
 #battle #pause svg{width:20px;height:20px;stroke-width:1.7}
@@ -247,10 +247,14 @@ dialog{position:absolute;top:auto;bottom:0;left:0;right:0;width:min(100%,480px);
 #game[data-screen=battle] .floater{font-family:var(--script);font-size:25px;color:#842d21;text-shadow:0 1px #fff0cc,1px 0 #fff0cc,-1px 0 #fff0cc}
 #battle[data-phase=moving] .battle-instruction{opacity:0}
 #battle[data-aiming=true] .enemy-intent{opacity:.62}
-#battle #battle-help,#battle .enemy-intent,#battle .enemy-intent>span,#battle .enemy-intent em{color:#535a47;opacity:1}
+#battle #battle-help,#battle .enemy-intent,#battle .enemy-intent>span,#battle .enemy-intent em{color:#3e4839;opacity:1}
+#battle .enemy-intent{font-size:12px;text-shadow:0 0 5px #f5eacf,0 0 3px #f5eacf,1px 1px 1px #f5eacf,-1px -1px 1px #f5eacf}
+#battle .enemy-intent>span,#battle .enemy-intent em{font-size:11px}
+#battle .enemy-intent b{font-size:16px}
 #battle .enemy-intent b,#battle .turn-banner.enemy-turn,#battle #boss-phase{color:#983e2c}
 #battle #boss-value,#battle .battle-instruction{color:#565d49}
 #battle #battle-squad .hero-card{color:#34392f;opacity:.85}
+#battle #battle-squad .hero-card>b{font-size:13px;letter-spacing:0}
 #battle #battle-squad .hero-card.selected{opacity:1}
 #battle #battle-squad .hero-card.selected>b{color:#9b3c27}
 #battle #battle-squad .health{background:#72735c;outline:1px solid #f1e7ced0}
@@ -285,6 +289,9 @@ dialog{position:absolute;top:auto;bottom:0;left:0;right:0;width:min(100%,480px);
  #battle #skill-info{right:16px;bottom:111px}
  #battle .battle-instruction{left:auto;right:16px;top:-58px;width:105px;white-space:normal;display:block;text-align:center}
 }
+
+#game[data-screen=battle] .floater.tactical{font-size:19px;white-space:nowrap;color:#963b28;letter-spacing:1px}
+#game[data-screen=battle] .unit-label .shield{color:#465d3d;text-shadow:0 0 3px #f5e8c8,1px 1px #f5e8c8}
 
 /* Interior pages share one quiet sheet. Art and type carry the hierarchy. */
 :root{--paper:#f1e9d8;--ink:#34392f;--muted:#757665;--red:#ac4933;--rule:#716d5428}
