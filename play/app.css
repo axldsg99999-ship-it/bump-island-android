@@ -169,8 +169,8 @@ dialog{position:absolute;top:auto;bottom:0;left:0;right:0;width:min(100%,480px);
 #game[data-screen=battle][data-boss=true] #scene-wrap{inset:0}
 #battle{isolation:isolate;--ivory:#30392e;--gold:#675a3b;color:var(--ivory);text-shadow:0 1px 2px #f7edcfb0}
 #battle:before,#battle:after{content:'';position:absolute;left:0;right:0;pointer-events:none;z-index:-1}
-#battle:before{top:0;height:132px;background:linear-gradient(180deg,#f1e7cef2,#f1e7ceba 48%,transparent)}
-#battle:after{bottom:0;height:132px;background:linear-gradient(0deg,#f1e7cef2,#f1e7ceba 57%,transparent)}
+#battle:before{top:0;height:124px;background:linear-gradient(180deg,#f1e7cefc 0%,#f1e7cee8 57%,#f1e7cea8 78%,transparent)}
+#battle:after{bottom:0;height:119px;background:linear-gradient(0deg,#f1e7cefc 0%,#f1e7cef0 61%,#f1e7ce99 83%,transparent)}
 #battle .battle-top{inset:max(12px,env(safe-area-inset-top)) 14px auto 20px;height:48px;display:block}
 #battle #pause{position:absolute;right:0;top:0;width:44px;height:44px;border:0;border-radius:0;background:none;color:var(--ivory)}
 #battle #pause svg{width:20px;height:20px;stroke-width:1.7}
@@ -292,6 +292,14 @@ dialog{position:absolute;top:auto;bottom:0;left:0;right:0;width:min(100%,480px);
 
 #game[data-screen=battle] .floater.tactical{font-size:19px;white-space:nowrap;color:#963b28;letter-spacing:1px}
 #game[data-screen=battle] .unit-label .shield{color:#465d3d;text-shadow:0 0 3px #f5e8c8,1px 1px #f5e8c8}
+/* Stable reading order: stage / turn / threat, with quiet space around them. */
+#battle .stage-caption{font-size:22px;letter-spacing:.3px}
+#battle .enemy-intent{gap:7px;text-shadow:none}
+#battle .enemy-intent b{font-size:15px}
+#battle .enemy-intent em{letter-spacing:.2px}
+#battle .battle-instruction{color:#424d3e;opacity:1;text-shadow:0 1px #f4e7cc}
+#battle #skill-name{color:#343f32;font-size:16px;letter-spacing:0}
+#battle #battle-squad .hero-card>b{line-height:1.4}
 
 /* Interior pages share one quiet sheet. Art and type carry the hierarchy. */
 :root{--paper:#f1e9d8;--ink:#34392f;--muted:#757665;--red:#ac4933;--rule:#716d5428}
@@ -391,6 +399,17 @@ dialog::backdrop{background:#24282096}
 .tutorial-steps b{font:400 17px var(--text);color:#a08869;padding-top:5px}
 .tutorial-steps section{font-size:21px}
 .tutorial-steps p{line-height:1.9}
+#sheet[data-kind=guide]{height:min(740px,90dvh);overflow:hidden;padding:26px 23px 16px}
+#sheet[data-kind=guide] #sheet-content{height:100%;display:flex;flex-direction:column;overflow:hidden}
+#sheet[data-kind=guide] .eyebrow,#sheet[data-kind=guide] .sheet-title{flex-shrink:0}
+#sheet[data-kind=guide] .sheet-title{font-size:26px;margin-bottom:8px}
+.guide-reading{flex:1;min-height:0;overflow:auto;overscroll-behavior:contain;padding-right:4px}
+#sheet[data-kind=guide] .tutorial-steps>div{padding:12px 0;gap:16px}
+#sheet[data-kind=guide] .tutorial-steps section{font-size:19px}
+#sheet[data-kind=guide] .tutorial-steps p{margin-top:5px;font-size:12px;line-height:1.8}
+.guide-details{border-top:1px solid var(--rule);margin-top:8px;padding-top:14px;font:400 12px/1.9 var(--text);color:var(--muted)}
+.guide-details summary{font-size:14px;color:var(--ink);cursor:pointer;min-height:36px}
+#sheet[data-kind=guide] #guide-done{flex:none;margin-top:13px;min-height:49px}
 .result{text-align:left;padding-top:12px}.result .medal{display:none}.result h2{font-size:36px;letter-spacing:2px}.result .stars{font-size:11px;letter-spacing:6px;margin:18px 0 24px}.result p{line-height:1.9}
 .result-stats{border:0;padding:0;margin:25px 0 32px;gap:22px}
 .result-stats b{font:400 25px var(--text);letter-spacing:0}.result-stats small{font-size:10px}
