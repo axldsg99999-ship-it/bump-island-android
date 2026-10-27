@@ -46,13 +46,13 @@ def wait_text(text,name,seconds=45):
             print('Verified UI: '+name,flush=True);return tree
         time.sleep(3)
     raise AssertionError('UI text not found: '+text)
-print(adb('install','-r','bump-island-8.7.0.apk'),flush=True)
+print(adb('install','-r','bump-island-8.7.1.apk'),flush=True)
 adb('shell','am','start','-W','-n','com.bumpisland.game/.MainActivity')
 tree=wait_text('开始闯关','00-old-home');assert click_text('开始闯关',tree)
 tree=wait_text('出发，第一碰','00-old-guide');assert click_text('出发，第一碰',tree)
 wait_text('施展','00-old-battle')
 adb('shell','am','force-stop','com.bumpisland.game')
-print(adb('install','-r',os.environ.get('ISLAND_APK','bump-island-8.7.1.apk')),flush=True)
+print(adb('install','-r',os.environ.get('ISLAND_APK','bump-island-8.8.0.apk')),flush=True)
 adb('shell','svc','wifi','disable');adb('shell','svc','data','disable')
 print(adb('shell','am','start','-W','-n','com.bumpisland.game/.MainActivity'),flush=True)
 tree=wait_text('开始闯关','01-home')
@@ -151,6 +151,6 @@ assert buttons
 box=list(map(int,re.findall(r'\d+',buttons[0].attrib['bounds'])));assert 0<=box[1]<box[3]<=1560,box
 assert click_text('出发，第一碰',tree)
 wait_text('施展','42-fresh-battle')
-(out/'result.json').write_text(json.dumps({'ok':not errors,'errors':errors,'android':adb('shell','getprop','ro.build.version.release').strip(),'offline':True,'installation':True,'home':True,'battle':True,'skill':not errors,'backButton':True,'coldRestart':True,'crewReplacement':True,'crewPersistence':True,'inkCharacterPreview':True,'motionDemo':True,'bestiaryOffline':True,'musicTogglePersistence':True,'physicalAudioListening':False,'audioDecoderSignal':True,'firstRunGuideVisible':True,'upgradedFrom':'8.7.0','version':'8.7.1'},indent=2))
+(out/'result.json').write_text(json.dumps({'ok':not errors,'errors':errors,'android':adb('shell','getprop','ro.build.version.release').strip(),'offline':True,'installation':True,'home':True,'battle':True,'skill':not errors,'backButton':True,'coldRestart':True,'crewReplacement':True,'crewPersistence':True,'inkCharacterPreview':True,'motionDemo':True,'bestiaryOffline':True,'musicTogglePersistence':True,'physicalAudioListening':False,'audioDecoderSignal':True,'firstRunGuideVisible':True,'upgradedFrom':'8.7.1','version':'8.8.0'},indent=2))
 assert not errors,errors
 print('Android installation and offline smoke passed',flush=True)
